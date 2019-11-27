@@ -44,7 +44,7 @@ export default class Gradient extends Component {
       <GradienteContainer color1={color1} color2={color2} >
         <div className="header">
           <b>CSS GRADIENT</b>
-          <span>Gradient Generator for Linead and Radial Css Color gradients</span>
+          <span>Gradient Generator for Lineal and Radial Css Color gradients</span>
           <span>Maria Garcia-Chavez</span>
         </div>
         <div className="body">
