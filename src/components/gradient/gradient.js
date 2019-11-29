@@ -1,35 +1,36 @@
 import React, { Component } from 'react';
 
 import { GradienteContainer, GradientElement, RadialElement } from './gradient.style';
-
+import CustomButton from '../button/button';
+import InputColor from '../inputColor/inputColor';
 export default class Gradient extends Component {
   state = {
     direction: 'top',
-    linearMode: true,
+    currentMode: true,
     color1: "#FFF",
     color2: "#7A7FBA"
   };
 
-  setDirection = (e) => {
-    const direction = e.target.value;
-    this.setState({ direction })
+  onHandleDirection = ({ value }) => {
+    this.setState({ direction: value })
   }
 
-  setMode = (e) => {
-    const linearMode = !this.state.linearMode;
-    this.setState({ linearMode })
+  onHandleMode = () => {
+    const currentMode = !this.state.currentMode;
+    this.setState({ currentMode })
   }
-  setColor1 = (e) => {
-    this.setState({ color1: e.target.value });
+  setColor1 = ({ value }) => {
+    console.log("color 1 ", value)
+    this.setState({ color1: value });
   }
 
-  setColor2 = (e) => {
-    console.log(" color 2 ", e.target.value)
-    this.setState({ color2: e.target.value });
+  setColor2 = ({ value }) => {
+    console.log("color 2 ", value)
+    this.setState({ color2: value });
   }
 
   render() {
-    const { direction, linearMode, color1, color2 } = this.state;
+    const { direction, currentMode, color1, color2 } = this.state;
     const directions = [
       { name: 'Top', value: 'top' },
       { name: 'Top Right', value: 'top right' },
@@ -47,63 +48,45 @@ export default class Gradient extends Component {
           <span>Gradient Generator for Lineal and Radial Css Color gradients</span>
           <span>Maria Garcia-Chavez</span>
         </div>
-        <div className="body">
-          <div className="p">
+
+        <div className="body-gradient">
+          <div>
             <div className='row'><b> STYLE</b></div>
             <div className='row'>
               <div className='column'>
-                <div className='blue-column'>
-                  <button className={`button  ${(linearMode) && 'active'}`} onClick={this.setMode} >Linear</button>
-                </div>
+                <CustomButton active={currentMode} title="Linear" onHandleFunction={this.onHandleMode} />
               </div>
               <div className='column'>
-                <div className='green-column'>
-                  <button className={`button  ${(!linearMode) && 'active'}`} onClick={this.setMode} >Radio</button>
-                </div>
+                <CustomButton active={!currentMode} title="Radio" onHandleFunction={this.onHandleMode} />
               </div>
             </div>
             <div className='row'><b> DIRECTION</b></div>
             <div className='row'>
               {
-                directions.map(currentDirection =>
-                  <div className='column' >
-                    <div >
-                      <button className={`button ${(currentDirection.value === direction) && 'active'}`} value={currentDirection.value} onClick={this.setDirection}>
-                        {currentDirection.name}
-                      </button>
-                    </div>
-                  </div>
-                )
+                directions.map((currentDirection, index) =>
+                  <div className='column' key={index} id={index} >
+                    <CustomButton parameters={{ value: currentDirection.value }} active={currentDirection.value === direction} title={currentDirection.name} onHandleFunction={this.onHandleDirection} />
+                  </div>)
               }
             </div>
             <div className='row'><b> COLORS</b></div>
-
             <div className='row' key="colors" id="colors">
-              <div className='colors1'>C1 </div>
-              <div className='column' key="colors-c" id="colors-r">
-                <input id="fname" name="firstname" value={color1} onChange={this.setColor1} />
-              </div>
+              <InputColor color={color1} onHandleFunction={this.setColor1} ></InputColor>
             </div>
             <div className='row'>
-              <div className='colors2'>C2 </div>
-              <div className='column'>
-                <input id="fname" name="firstname" value={color2} onChange={this.setColor2} />
-              </div>
+              <InputColor color={color2} onHandleFunction={this.setColor2} ></InputColor>
             </div>
           </div>
-
-
-
           <div className='row-fix'>
             {
-              linearMode ?
+              currentMode ?
                 <GradientElement key="linear" id="linear" linear={direction} color1={color1} color2={color2} />
                 :
                 <RadialElement key="radial" id="radial" linear={direction} color1={color1} color2={color2} />
             }
             <div className="stringStyle">
               {
-                linearMode ?
+                currentMode ?
                   ` background: linear-gradient(to ${direction}, ${color1}, ${color2});`
                   :
                   ` background:  radial-gradient(circle at ${direction}, ${color1}, ${color2});`
@@ -112,8 +95,6 @@ export default class Gradient extends Component {
             </div>
           </div>
         </div >
-
-
       </GradienteContainer >
 
 
