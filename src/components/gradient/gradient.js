@@ -51,7 +51,7 @@ export default class Gradient extends Component {
 
         <div className="body-gradient">
           <div>
-            <div className='row'><b> STYLE</b></div>
+            <div className='row'><b>STYLE</b></div>
             <div className='row'>
               <div className='column'>
                 <CustomButton active={currentMode} title="Linear" onHandleFunction={this.onHandleMode} />
