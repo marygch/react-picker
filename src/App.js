@@ -1,5 +1,5 @@
 import React from 'react';
-import Gradient from './components/gradient/gradient';
+import Gradient from './container/gradient';
 import './App.css';
 
 function App() {
